@@ -1,11 +1,19 @@
 # Dockerized-Flask-API
-General API to handle receiving of large data file chunks via HTTP requests
+General API to handle uploads of large data file chunks via HTTP requests
 - Elements within `<>` are values you must fill in
-- This version is implemented with use of TLS 1.2 encryption via host machine .pem and .key files for verification
 
 # Requirements
   - Host server with Docker installed
   - Docker Desktop for remote repository of docker image
+
+# Server.py
+  General endpoints to handle processing entire file upload or chunks via multiple requests.
+  - Entire file uploads are saved to the uploads folder and reflected onto the mounted directory on host machine
+  - Chunk uploads require addition information to restructure the file from received chunks (i.e., chunk number, total number of chunks)
+
+  This version is implemented with use of TLS 1.2 encryption via host machine .pem and .key files for verification
+
+
 
 # Building Dockerized Application onto Remote Server
   Move to the directory with the Dockerfile
@@ -24,14 +32,19 @@ General API to handle receiving of large data file chunks via HTTP requests
   - `docker login`
   - `docker pull <repository-name>:<tag>`
 
-# Running Docker image in a container in detached mode w/ mounted local directory
+## Running Docker image in a container in detached mode w/ mounted local directory
   To have the Flask application's `/app/uploads` directory mounted to a given file directory on host machine 
   - `docker run -d -v <host-machine-directory>:/app/uploads -p <host-port-number>:<container-port-number> <Docker-image>`
 
-# Miscellaneous configuration for Docker container that you can do
+## Miscellaneous configuration for Docker container that you can do
   Setting name to container during the mounting process
   - `docker run -d --name <container-name> -v <host-machine-directory>:/app/uploads -p <host-port-number>:<container-port-number> <Docker-image>`
 
   Checking the uploads folder of the dockerized flask server:
   - `docker exec -it <Docker-container-ID> ls ./uploads`
+
+# Additional Features that need implementation
+  - Inclusion of a method to request files from the host machine via GET request.
+  - Deletion of specific files via DELETE requests.
+  - System for generating and checking API keys before allowing service.
   
