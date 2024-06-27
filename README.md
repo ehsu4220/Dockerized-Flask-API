@@ -11,6 +11,8 @@ General API to handle uploads of large data files via HTTP requests
   - Entire file uploads are saved to the uploads folder and reflected onto the mounted directory on host machine
   - Chunk uploads require addition information to restructure the file from received chunks (i.e., chunk number, total number of chunks)
   - Entire files are handled through `Forms`, Chunks are handled through `Header` values
+  - Chunks are stored until all are received in order to reformulate the file
+    - Files are reformulated via the `async` method, `process_data()` through threads.
 
   This version is implemented with use of TLS 1.2 encryption via host machine .pem and .key files for verification
 
