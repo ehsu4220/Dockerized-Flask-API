@@ -1,6 +1,7 @@
 # Dockerized-Flask-API
 General API to handle receiving of large data file chunks via HTTP requests
 - Elements within `<>` are values you must fill in
+- This version is implemented with use of TLS 1.2 encryption via host machine .pem and .key files for verification
 
 # Requirements
   - Host server with Docker installed
