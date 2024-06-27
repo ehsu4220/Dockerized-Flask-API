@@ -43,8 +43,8 @@ def upload_form():
     return render_template('upload.html')
 
 
-@app.route('/windows/upload', methods=['POST'])
-def windows_upload_file():
+@app.route('/upload/entire', methods=['POST'])
+def upload_entire_file():
     if request.method == 'POST':
         # check if the post request has the file part
         print('-----------------------------------')
@@ -70,8 +70,8 @@ def windows_upload_file():
             return redirect(request.url)
 
 
-@app.route('/ios/upload', methods=['POST'])
-def iOS_upload():
+@app.route('/upload/chunk', methods=['POST'])
+def upload_chunked_file():
     # Get the headers from the request
     file_name = request.headers.get('fileName')
     total_chunks = int(request.headers.get('TotalChunks'))
@@ -120,5 +120,5 @@ def process_data(file_name, total_chunks, cur_chunk, data):
 
 
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0',port = 18010, debug = False, ssl_context=context)
+    app.run(host = '0.0.0.0',port = 5000, debug = False, ssl_context=context)
     #app.run(host = '0.0.0.0',port = 5000, debug = False)
