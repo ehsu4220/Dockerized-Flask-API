@@ -13,11 +13,9 @@ app.secret_key = "secret key"
 
 path = os.getcwd()
 
-
 # Location of the permissions and private key
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-context.load_cert_chain('/app/uploads/cred/earlyscreen-chain.pem', '/app/uploads/cred/lass-earlyscreen.key')
-#context = ('/app/uploads/cred/earlyscreen-chain.pem', '/app/uploads/cred/lass-earlyscreen.key')
+context.load_cert_chain('/host/machine/pem/file/location/file.pem', '/host/machine/key/file/location/file.pem')
 
 # Change to earlyscreen directory
 UPLOAD_FOLDER = os.path.join(path, 'uploads')
