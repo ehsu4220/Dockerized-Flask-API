@@ -42,24 +42,18 @@ def allowed_file(filename):
 def upload_form():
     return render_template('upload.html')
 
-
+# Uses request form
 @app.route('/upload/entire', methods=['POST'])
 def upload_entire_file():
     if request.method == 'POST':
-        # check if the post request has the file part
-        print('-----------------------------------')
-        print("fileName: ", request.form['fileName'])
-        print("ByteData: ", request.files['ByteData'])
-        print("-----------------------------------")
+        # Verify form values
+        if 'fileName' not in request.form or 'ByteData' not in request.files:
+            flash('No file or filename part in the request')
+            return redirect(request.url)
 
-        # if 'file' not in request.files:
-        #     flash('No file part')
-        #     return redirect(request.url)
+        # Process and save file to /app/uploads directory
         fileName = request.form['fileName']
         file = request.files['ByteData']
-        # if file.filename == '':
-        #     flash('No file selected for uploading')
-        #     return redirect(request.url)
         if file and allowed_file(fileName):
             filename = secure_filename(fileName)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -69,22 +63,26 @@ def upload_entire_file():
             flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif, wav, mp4, db')
             return redirect(request.url)
 
-
+# Uses headers
 @app.route('/upload/chunk', methods=['POST'])
 def upload_chunked_file():
-    # Get the headers from the request
-    file_name = request.headers.get('fileName')
-    total_chunks = int(request.headers.get('TotalChunks'))
-    cur_chunk = int(request.headers.get('CurChunk'))
-    data = request.get_data()
+    if request.method == 'POST':
+        # Get the headers from the request
+        file_name = request.headers.get('fileName')
+        total_chunks = int(request.headers.get('TotalChunks'))
+        cur_chunk = int(request.headers.get('CurChunk'))
+        data = request.get_data()
 
-    # Process the request values
-    t = Thread(target=process_data, args=(file_name, total_chunks, cur_chunk, data))
-    t.start()
-
-    response = make_response('chunk received')
-    response.status_code = 200
-    return response
+        if not file_name or not total_chunks or not cur_chunk or not data:
+            return jsonify({'error': 'Missing fileName, TotalChunks, CurChunk, or ByteData in headers'}), 400
+        
+        # Process the request values
+        t = Thread(target=process_data, args=(file_name, total_chunks, cur_chunk, data))
+        t.start()
+    
+        response = make_response('chunk received')
+        response.status_code = 200
+        return response
 
 
 # Async function that begins processing the request data
