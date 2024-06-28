@@ -19,4 +19,4 @@ ENV SSL_PROTOCOL=TLSv1.2
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
 
-CMD ["EarlyScreenServer.py"]
+CMD ["app.py"]
