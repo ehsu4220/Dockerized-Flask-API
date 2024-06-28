@@ -3,7 +3,7 @@ General API to handle uploads of large data files via HTTP requests
 - Elements within `<>` are values you must fill in
 
 # Requirements
-  - Host machine with Docker cmd line
+  - Host machine with Docker CLI
   - Docker Desktop for remote repository of docker image
 
 # app.py
