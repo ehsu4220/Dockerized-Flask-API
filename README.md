@@ -6,7 +6,7 @@ General API to handle uploads of large data files via HTTP requests
   - Host machine with Docker cmd line
   - Docker Desktop for remote repository of docker image
 
-# Server.py
+# app.py
   General endpoints to handle processing uploads of entire files or chunks.
   - Entire file uploads are saved to the uploads folder and reflected onto the mounted directory on host machine
   - Chunk uploads require addition information to restructure the file from received chunks (i.e., chunk number, total number of chunks)
