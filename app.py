@@ -118,5 +118,5 @@ def process_data(file_name, total_chunks, cur_chunk, data):
 
 
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0',port = 5000, debug = False, ssl_context=context)
+    app.run(host = '0.0.0.0',port = 80, debug = False, ssl_context=context)
     #app.run(host = '0.0.0.0',port = 5000, debug = False)
